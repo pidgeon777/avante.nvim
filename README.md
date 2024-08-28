@@ -29,6 +29,7 @@ https://github.com/user-attachments/assets/86140bfd-08b4-483d-a887-1b701d9e37dd
   "yetone/avante.nvim",
   event = "VeryLazy",
   lazy = false,
+  build = "make", -- This is Optional, only if you want to use tiktoken_core to calculate tokens count
   opts = {
     -- add any opts here
   },
@@ -112,12 +113,27 @@ require('avante').setup ({
 })
 ```
 
-</details>
+For Windows users, change the build command to the following:
 
+```lua
+{
+  "yetone/avante.nvim",
+  event = "VeryLazy",
+  build = "powershell -ExecutionPolicy Bypass -File Build-LuaTiktoken.ps1", -- This is Optional, only if you want to use tiktoken_core to calculate tokens count
+  -- rest of the config
+}
+```
+
+</details>
 
 > [!IMPORTANT]
 >
 > `avante.nvim` is currently only compatible with Neovim 0.10.1 or later. Please ensure that your Neovim version meets these requirements before proceeding.
+
+> [!IMPORTANT]
+>
+> If your neovim doesn't use LuaJIT, then change `build` to `make lua51`. By default running make will install luajit.
+> Avante.nvim will now requires cargo to build tiktoken_core from source.
 
 > [!NOTE]
 >
@@ -140,7 +156,7 @@ _See [config.lua#L9](./lua/avante/config.lua) for the full config_
 
 ```lua
 {
-  ---@alias Provider "openai" | "claude" | "azure" | "cohere" | [string]
+  ---@alias Provider "openai" | "claude" | "azure"  | "copilot" | "cohere" | [string]
   provider = "claude", -- Only recommend using Claude
   claude = {
     endpoint = "https://api.anthropic.com",
@@ -308,11 +324,11 @@ See [wiki](https://github.com/yetone/avante.nvim/wiki) for more recipes and tric
 
 We would like to express our heartfelt gratitude to the contributors of the following open-source projects, whose code has provided invaluable inspiration and reference for the development of avante.nvim:
 
-| Nvim Plugin | License | Functionality | Where did we use |
-| --- | --- | --- | --- |
-| [git-conflict.nvim](https://github.com/akinsho/git-conflict.nvim) | No License | Diff comparison functionality | https://github.com/yetone/avante.nvim/blob/main/lua/avante/diff.lua |
-| [ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim) | Apache 2.0 License | Calculation of tokens count | https://github.com/yetone/avante.nvim/blob/main/lua/avante/utils/tokens.lua |
-| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | MIT License | Clipboard image support | https://github.com/yetone/avante.nvim/blob/main/lua/avante/clipboard.lua |
+| Nvim Plugin | Functionality | Where did we use |
+| --- | --- | --- |
+| [git-conflict.nvim](https://github.com/akinsho/git-conflict.nvim) | Diff comparison functionality | https://github.com/yetone/avante.nvim/blob/main/lua/avante/diff.lua |
+| [CopilotChat.nvim](https://github.com/CopilotC-Nvim/CopilotChat.nvim) | Request logic for Copilot's API | https://github.com/yetone/avante.nvim/blob/main/lua/avante/providers/copilot.lua |
+| [ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim) | Calculation of tokens count | https://github.com/yetone/avante.nvim/blob/main/lua/avante/utils/tokens.lua |
 
 The high quality and ingenuity of these projects' source code have been immensely beneficial throughout our development process. We extend our sincere thanks and respect to the authors and contributors of these projects. It is the selfless dedication of the open-source community that drives projects like avante.nvim forward.
 

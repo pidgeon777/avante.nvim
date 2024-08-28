@@ -10,7 +10,7 @@ local M = {}
 ---@field silent_warning boolean will be determined from debug
 M.defaults = {
   debug = false,
-  ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | string
+  ---@alias Provider "claude" | "openai" | "azure" | "copilot" | "gemini" | "cohere" | string
   provider = "claude", -- Only recommend using Claude
   ---@type AvanteSupportedProvider
   openai = {
@@ -20,6 +20,16 @@ M.defaults = {
     temperature = 0,
     max_tokens = 4096,
     ["local"] = false,
+  },
+  ---@type AvanteSupportedProvider
+  copilot = {
+    endpoint = "https://api.githubcopilot.com",
+    model = "gpt-4o-2024-05-13",
+    proxy = nil, -- [protocol://]host[:port] Use this proxy
+    allow_insecure = false, -- Allow insecure server connections
+    timeout = 30000, -- Timeout in milliseconds
+    temperature = 0,
+    max_tokens = 4096,
   },
   ---@type AvanteAzureProvider
   azure = {
